@@ -22,12 +22,20 @@ import debug_toolbar
 
 from blog.sitemaps import PostSitemap
 
+from django.urls import path
+
+
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
+
 sitemaps = {
     "posts": PostSitemap,
 }
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("sentry-debug/", trigger_error),
     path("", include("blog.urls"), name="blog-urls"),
     path("summernote/", include("django_summernote.urls")),
     path("__debug__/", include(debug_toolbar.urls)),
